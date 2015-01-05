@@ -28,7 +28,6 @@ public class GameScreen implements Screen {
         font = new BitmapFont();
         font.setScale(1.5f);
         font.setColor(Color.RED);
-        
     }
 
     @Override

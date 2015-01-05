@@ -11,11 +11,13 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class Frog extends GameObject {
 
+    private Rectangle bottom;
     private Sprite sprite;
     private Texture texture;
 
     //Entry point
     public Frog() {
+        bottom = new Rectangle(0, 0, 128, 16);
         texture = new Texture(Gdx.files.internal("sprite/frog.png"));
         sprite = new Sprite(texture, 0, 0, 32, 32);
     }
@@ -41,6 +43,39 @@ public class Frog extends GameObject {
 
     @Override
     public void moveRight(float delta) {
+    }
+
+    //Controls for frog
+    public void moveRight(){
+        bottom.x += 32;
+        sprite.setPosition(bottom.x, bottom.y);
+    }
+
+    public void moveLeft(){
+        bottom.x -= 32;
+        sprite.setPosition(bottom.x, bottom.y);
+    }
+
+    public void moveUp(){
+        bottom.y += 32;
+        sprite.setPosition(bottom.x, bottom.y);
+    }
+
+    public void moveDown(){
+        bottom.x -= 32;
+        sprite.setPosition(bottom.x, bottom.y);
+    }
+    public float getBottom() {
+        return sprite.getY();
+    }
+    public float getLeft() {
+        return sprite.getX();
+    }
+    public float getRight() {
+        return sprite.getX()+sprite.getWidth();
+    }
+    public float getTop() {
+        return sprite.getY()+sprite.getHeight();
     }
 
     @Override
