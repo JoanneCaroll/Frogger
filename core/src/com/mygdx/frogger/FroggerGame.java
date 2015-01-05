@@ -4,22 +4,21 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.frogger.objects.Frog;
 
 public class FroggerGame implements ApplicationListener {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private Frog frog;
+    private Texture frog;
 
     @Override
     public void create() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
-        frog = new Frog();
-        frog.setPosition(10, 30);
+        frog = new Texture("sprite/frog.png");
     }
 
     @Override
@@ -28,7 +27,7 @@ public class FroggerGame implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        frog.draw(batch);
+        batch.draw(frog, 10, 30);
         batch.end();
     }
 
