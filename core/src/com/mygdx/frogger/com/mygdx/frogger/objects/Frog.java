@@ -17,7 +17,7 @@ public class Frog extends GameObject {
 
     //Entry point
     public Frog() {
-        bottom = new Rectangle(0, 0, 128, 16);
+        bottom = new Rectangle(0, 0, 32, 32);
         texture = new Texture(Gdx.files.internal("sprite/frog.png"));
         sprite = new Sprite(texture, 0, 0, 32, 32);
     }
