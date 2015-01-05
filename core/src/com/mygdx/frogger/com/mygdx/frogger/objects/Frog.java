@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by Caroll Madrona on 1/5/2015.
  */
-public class Frog {
+public class Frog extends GameObject {
 
     private Sprite sprite;
     private Texture texture;
@@ -35,4 +35,16 @@ public class Frog {
         sprite.draw(batch);
     }
 
+    @Override
+    public void moveLeft(float delta) {
+    }
+
+    @Override
+    public void moveRight(float delta) {
+    }
+
+    @Override
+    public Rectangle getHitBox() {
+        return null;
+    }
 }
