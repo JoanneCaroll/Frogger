@@ -8,30 +8,38 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.frogger.Frogger;
 import com.mygdx.frogger.SimpleDirectionGestureDetector;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
+import com.mygdx.frogger.com.mygdx.frogger.objects.GameObject;
+import com.mygdx.frogger.com.mygdx.frogger.objects.Grass;
+
+import java.util.ArrayList;
 
 /**
  * Created by Caroll Madrona on 1/5/2015.
  */
 public class GameScreen implements Screen {
     private Frog frog;
+    private ArrayList<GameObject> grass = new ArrayList<GameObject>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Frogger game;
     private BitmapFont font;
-
+    private int max, px;
     public GameScreen(Frogger game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
         frog = new Frog();
-        frog.setPosition(0,32);
+        frog.setPosition(0, 32);
     }
 
     @Override
     public void render(float delta) {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
+        for (GameObject z : grass) {
+            z.draw(batch);
+        }
         frog.draw(batch);
         batch.end();
     }
@@ -42,6 +50,27 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
+        //adding of grass
+        for(int g=0; g<3; g++) {
+            if(g==0){
+                px=0;
+                max = 32;
+            }
+            else if(g==1){
+                px=0;
+                max = 160;
+            }
+            else if(g==2){
+                px=0;
+                max = 288;
+            }
+            for(int i=0; i<23; i++) {
+                grass.add(new Grass(px, max));
+                px += 32;
+            }
+        }
+
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
