@@ -10,6 +10,7 @@ import com.mygdx.frogger.SimpleDirectionGestureDetector;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
 import com.mygdx.frogger.com.mygdx.frogger.objects.GameObject;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Grass;
+import com.mygdx.frogger.com.mygdx.frogger.objects.Road;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class GameScreen implements Screen {
     private Frog frog;
     private ArrayList<GameObject> grass = new ArrayList<GameObject>();
+    private ArrayList<GameObject> road = new ArrayList<GameObject>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Frogger game;
@@ -38,6 +40,9 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
         for (GameObject z : grass) {
+            z.draw(batch);
+        }
+        for (GameObject z : road) {
             z.draw(batch);
         }
         frog.draw(batch);
@@ -67,6 +72,26 @@ public class GameScreen implements Screen {
             }
             for(int i=0; i<23; i++) {
                 grass.add(new Grass(px, max));
+                px += 32;
+            }
+        }
+
+        //adding of roads
+        for(int g=0; g<3; g++) {
+            if(g==0){
+                px=0;
+                max = 64;
+            }
+            else if(g==1){
+                px=0;
+                max = 96;
+            }
+            else if(g==2){
+                px=0;
+                max = 128;
+            }
+            for(int i=0; i<23; i++) {
+                road.add(new Road(px, max));
                 px += 32;
             }
         }
