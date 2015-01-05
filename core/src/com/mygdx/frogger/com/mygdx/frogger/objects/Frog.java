@@ -62,7 +62,7 @@ public class Frog extends GameObject {
     }
 
     public void moveDown(){
-        bottom.x -= 32;
+        bottom.y -= 32;
         sprite.setPosition(bottom.x, bottom.y);
     }
     public float getBottom() {
