@@ -1,52 +1,54 @@
 package com.mygdx.frogger;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
+import com.mygdx.frogger.screens.MainMenuScreen;
 
-public class FroggerGame implements ApplicationListener {
+public class Frogger extends Game {
 
-    private OrthographicCamera camera;
     private SpriteBatch batch;
-    private Frog frog;
+    private OrthographicCamera camera;
+    public MainMenuScreen mainMenuScreen;
+
+    //Entry point
+    public Frogger() {
+    }
 
     @Override
     public void create() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
-        frog = new Frog();
-        frog.setPosition(10,30);
+        mainMenuScreen = new MainMenuScreen(this);
+        setScreen(mainMenuScreen);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render();
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        frog.draw(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
-    }
-
-    @Override
-    public void resize(int width, int height) {
+        super.dispose();
+        batch.dispose();
     }
 
     @Override
     public void pause() {
+        super.pause();
     }
 
     @Override
     public void resume() {
+        super.resume();
     }
-
-
 }
