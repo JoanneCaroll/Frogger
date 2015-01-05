@@ -56,5 +56,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        batch.dispose();
+        font.dispose();
     }
 }
