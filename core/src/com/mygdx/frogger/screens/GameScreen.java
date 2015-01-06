@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Frogger game;
     private BitmapFont font;
-    private int max, px, score;
+    private int max, px, score, flag;
 
     public GameScreen(Frogger game){
 
@@ -120,6 +120,7 @@ public class GameScreen implements Screen {
         grass.add(new Grass(0, 288));
         road = new Road(0, 64);
         water = new Water(0,192);
+
         //adding of cars
         for(int g=0; g<2; g++) {
             if(g==0){
@@ -174,12 +175,16 @@ public class GameScreen implements Screen {
             px -= 200;
         }
 
+        //controls
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
                 if(frog.getTop() < 320) {
-                    score++;
                     frog.moveUp();
+                    if(flag == 0) {
+                        score++;
+                    }
+                    flag = 0;
                 }
             }
             @Override
@@ -195,6 +200,7 @@ public class GameScreen implements Screen {
             @Override
             public void onDown() {
                 if(frog.getBottom() > 32)
+                    flag = 1;
                     frog.moveDown();
             }
         }));
