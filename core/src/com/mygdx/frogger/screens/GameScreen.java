@@ -2,6 +2,7 @@ package com.mygdx.frogger.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,8 +36,10 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Frogger game;
     private BitmapFont font;
-    private int max, px;
+    private int max, px, score;
+
     public GameScreen(Frogger game){
+
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
@@ -71,6 +74,7 @@ public class GameScreen implements Screen {
             lg.moveRight(Gdx.graphics.getDeltaTime());
         }
         frog.draw(batch);
+        font.draw(batch, "Score: " + score, 0, 20);
         batch.end();
 
         //updates
@@ -78,7 +82,7 @@ public class GameScreen implements Screen {
             if(frog.hits(c.getHitBox()) != -1) {
                 frog.action(1);
                 if(c.hitAction(1) == 2) {
-                    frog.setPosition(0,32);
+                   frog.goToStartPosition();
                 }
 
             }
@@ -87,9 +91,15 @@ public class GameScreen implements Screen {
             if(frog.hits(t.getHitBox()) != -1) {
                 frog.action(1);
                 if(t.hitAction(1) == 2) {
-                    frog.setPosition(0,32);
+                    frog.goToStartPosition();
                 }
 
+            }
+        }
+        if(frog.hits(water.getHitBox()) != -1) {
+            frog.action(1);
+            if(water.hitAction(1) == 2) {
+                frog.setPosition(0,32);
             }
         }
         //controls
@@ -102,7 +112,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        font = new BitmapFont();
+        font.setScale(1.5f);
+        font.setColor(Color.RED);
         grass.add(new Grass(0, 32));
         grass.add(new Grass(0, 160));
         grass.add(new Grass(0, 288));
@@ -165,8 +177,10 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
-                if(frog.getTop() < 320)
+                if(frog.getTop() < 320) {
+                    score++;
                     frog.moveUp();
+                }
             }
             @Override
             public void onRight() {

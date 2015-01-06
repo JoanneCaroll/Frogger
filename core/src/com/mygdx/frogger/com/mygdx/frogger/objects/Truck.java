@@ -15,14 +15,14 @@ public class Truck extends GameObject {
     Texture texture;
 
     public Truck(int x, int y) {
-        hitBox = new Rectangle(x, y, 32, 32);
+        hitBox = new Rectangle(x, y, 96, 32);
         texture = new Texture(Gdx.files.internal("sprite/truck.png"));
         sprite = new Sprite(texture);
         setPosition(x, y);
     }
     @Override
     public int hits(Rectangle r) {
-        return 0;
+        return -1;
     }
 
     @Override

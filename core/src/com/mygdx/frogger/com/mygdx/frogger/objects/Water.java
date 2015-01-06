@@ -22,7 +22,7 @@ public class Water extends GameObject {
     }
     @Override
     public int hits(Rectangle r) {
-        return 0;
+        return -1;
     }
 
     @Override
@@ -54,11 +54,12 @@ public class Water extends GameObject {
 
     @Override
     public Rectangle getHitBox() {
-        return null;
+        return hitBox;
     }
 
     @Override
     public int hitAction(int side) {
+        if(side==1) return 2;
         return 0;
     }
 }

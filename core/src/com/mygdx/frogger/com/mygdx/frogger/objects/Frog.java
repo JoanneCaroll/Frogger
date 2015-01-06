@@ -37,7 +37,7 @@ public class Frog extends GameObject {
 
     public void action(int type) {
         if(type == 1) {
-            setPosition(bottom.x,bottom.y);
+            setPosition(0,32);
         }
     }
 
@@ -77,17 +77,27 @@ public class Frog extends GameObject {
         bottom.y -= 32;
         sprite.setPosition(bottom.x, bottom.y);
     }
+    
     public float getBottom() {
         return sprite.getY();
     }
+
     public float getLeft() {
         return sprite.getX();
     }
+
     public float getRight() {
         return sprite.getX()+sprite.getWidth();
     }
+
     public float getTop() {
         return sprite.getY()+sprite.getHeight();
+    }
+
+    public void goToStartPosition(){
+        bottom.x = 0;
+        bottom.y = 32;
+        sprite.setPosition(bottom.x, bottom.y);
     }
 
     @Override
