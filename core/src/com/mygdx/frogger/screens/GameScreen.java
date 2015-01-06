@@ -11,6 +11,7 @@ import com.mygdx.frogger.com.mygdx.frogger.objects.Car;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
 import com.mygdx.frogger.com.mygdx.frogger.objects.GameObject;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Grass;
+import com.mygdx.frogger.com.mygdx.frogger.objects.Lily;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Road;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Truck;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Water;
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
     private Water water;
     private ArrayList<GameObject> truck = new ArrayList<GameObject>();
     private ArrayList<GameObject> cars = new ArrayList<GameObject>();
+    private ArrayList<GameObject> lily = new ArrayList<GameObject>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Frogger game;
@@ -58,6 +60,10 @@ public class GameScreen implements Screen {
             t.draw(batch);
             t.moveLeft(Gdx.graphics.getDeltaTime());
         }
+        for(GameObject l: lily) {
+            l.draw(batch);
+            l.moveLeft(Gdx.graphics.getDeltaTime());
+        }
         frog.draw(batch);
         batch.end();
     }
@@ -74,7 +80,6 @@ public class GameScreen implements Screen {
         grass.add(new Grass(0, 288));
         road = new Road(0, 64);
         water = new Water(0,192);
-
         //adding of cars
         for(int g=0; g<2; g++) {
             if(g==0){
@@ -100,6 +105,26 @@ public class GameScreen implements Screen {
         for(int i = 0; i < 99; i++) {
             truck.add(new Truck(px,96));
             px += 250;
+        }
+
+        //adding of lily
+        for(int g=0; g<2; g++) {
+            if(g==0){
+                px=720;
+                max = 192;
+            }
+            else {
+                px=700;
+                max = 256;
+            }
+            for(int i=0; i<99; i++) {
+                lily.add(new Lily(px, max));
+                if(g==0) {
+                    px +=200;
+                }
+                else
+                    px +=170;
+            }
         }
 
 
