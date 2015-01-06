@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
     private Frogger game;
     private BitmapFont font;
     private int max, px, score, flag;
-    private boolean isInitial = false;
+
     public GameScreen(Frogger game){
 
         this.game = game;
@@ -185,9 +185,6 @@ public class GameScreen implements Screen {
                         score++;
                     }
                     flag = 0;
-//                    if(frog.getTop() == 96) {
-//                        isInitial = true;
-//                    }
                 }
             }
             @Override
