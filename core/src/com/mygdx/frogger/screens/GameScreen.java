@@ -12,6 +12,7 @@ import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
 import com.mygdx.frogger.com.mygdx.frogger.objects.GameObject;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Grass;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Lily;
+import com.mygdx.frogger.com.mygdx.frogger.objects.Log;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Road;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Truck;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Water;
@@ -29,6 +30,7 @@ public class GameScreen implements Screen {
     private ArrayList<GameObject> truck = new ArrayList<GameObject>();
     private ArrayList<GameObject> cars = new ArrayList<GameObject>();
     private ArrayList<GameObject> lily = new ArrayList<GameObject>();
+    private ArrayList<GameObject> log = new ArrayList<GameObject>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Frogger game;
@@ -63,6 +65,10 @@ public class GameScreen implements Screen {
         for(GameObject l: lily) {
             l.draw(batch);
             l.moveLeft(Gdx.graphics.getDeltaTime());
+        }
+        for(GameObject lg: log) {
+            lg.draw(batch);
+            lg.moveRight(Gdx.graphics.getDeltaTime());
         }
         frog.draw(batch);
         batch.end();
@@ -127,6 +133,12 @@ public class GameScreen implements Screen {
             }
         }
 
+        //adding of log
+        px = -85;
+        for(int i = 0; i < 99; i++) {
+            log.add(new Log(px, 224 ));
+            px -= 200;
+        }
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override

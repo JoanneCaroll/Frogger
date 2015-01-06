@@ -23,6 +23,9 @@ public class Frog extends GameObject {
     }
 
     public int hits(Rectangle r) {
+        if(bottom.overlaps(r)) {
+            return 1;
+        }
         return -1;
     }
 

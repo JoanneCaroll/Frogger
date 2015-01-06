@@ -13,14 +13,10 @@ public class Frogger extends Game {
     private OrthographicCamera camera;
     public MainMenuScreen mainMenuScreen;
 
-    //Entry point
-    public Frogger() {
-    }
-
     @Override
     public void create() {
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 720, 360);
+        camera.setToOrtho(false, 32, 360);
         batch = new SpriteBatch();
         mainMenuScreen = new MainMenuScreen(this);
         setScreen(mainMenuScreen);
