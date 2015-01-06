@@ -15,14 +15,14 @@ public class Car extends GameObject {
     Texture texture;
 
     public Car(int x, int y) {
-        hitBox = new Rectangle(x, y, 32, 32);
+        hitBox = new Rectangle(x, y, 64, 32);
         texture = new Texture(Gdx.files.internal("sprite/car.png"));
         sprite = new Sprite(texture);
         setPosition(x, y);
     }
     @Override
     public int hits(Rectangle r) {
-        return 0;
+        return -1;
     }
 
     @Override
@@ -54,6 +54,12 @@ public class Car extends GameObject {
 
     @Override
     public Rectangle getHitBox() {
-        return null;
+        return hitBox;
+    }
+
+    @Override
+    public int hitAction(int side) {
+        if(side==1) return 2;
+        return 0;
     }
 }

@@ -30,6 +30,15 @@ public class Frog extends GameObject {
     }
 
     public void action(int type, float x, float y) {
+        if(type == 1) {
+            setPosition(0,32);
+        }
+    }
+
+    public void action(int type) {
+        if(type == 1) {
+            setPosition(bottom.x,bottom.y);
+        }
     }
 
     public void setPosition(float x, float y) {
@@ -84,5 +93,10 @@ public class Frog extends GameObject {
     @Override
     public Rectangle getHitBox() {
         return null;
+    }
+
+    @Override
+    public int hitAction(int side) {
+        return 0;
     }
 }

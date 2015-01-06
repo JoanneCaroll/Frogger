@@ -72,6 +72,19 @@ public class GameScreen implements Screen {
         }
         frog.draw(batch);
         batch.end();
+
+        //updates
+        for(GameObject c: cars) {
+            if(frog.hits(c.getHitBox()) != -1) {
+                frog.action(1);
+                if(c.hitAction(1) == 2) {
+                    frog.setPosition(0,32);
+                }
+
+            }
+        }
+        //controls
+
     }
 
     @Override
@@ -99,10 +112,10 @@ public class GameScreen implements Screen {
             for(int i=0; i<99; i++) {
                 cars.add(new Car(px, max));
                 if(g==0) {
-                    px -=150;
+                    px -=170;
                 }
                 else
-                    px -=130;
+                    px -=200;
             }
         }
 
