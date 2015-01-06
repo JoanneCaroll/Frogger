@@ -54,11 +54,12 @@ public class Truck extends GameObject {
 
     @Override
     public Rectangle getHitBox() {
-        return null;
+        return hitBox;
     }
 
     @Override
     public int hitAction(int side) {
+        if(side==1) return 2;
         return 0;
     }
 }

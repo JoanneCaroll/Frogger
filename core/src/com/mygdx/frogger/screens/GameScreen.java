@@ -83,6 +83,15 @@ public class GameScreen implements Screen {
 
             }
         }
+        for(GameObject t: truck) {
+            if(frog.hits(t.getHitBox()) != -1) {
+                frog.action(1);
+                if(t.hitAction(1) == 2) {
+                    frog.setPosition(0,32);
+                }
+
+            }
+        }
         //controls
 
     }
