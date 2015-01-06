@@ -12,6 +12,7 @@ import com.mygdx.frogger.com.mygdx.frogger.objects.Frog;
 import com.mygdx.frogger.com.mygdx.frogger.objects.GameObject;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Grass;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Road;
+import com.mygdx.frogger.com.mygdx.frogger.objects.Truck;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Water;
 
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ import java.util.ArrayList;
 public class GameScreen implements Screen {
     private Frog frog;
     private ArrayList<GameObject> grass = new ArrayList<GameObject>();
-    private ArrayList<GameObject> road = new ArrayList<GameObject>();
-    private ArrayList<GameObject> water = new ArrayList<GameObject>();
+    private Road road;
+    private Water water;
+    private ArrayList<GameObject> truck = new ArrayList<GameObject>();
     private ArrayList<GameObject> cars = new ArrayList<GameObject>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -46,15 +48,15 @@ public class GameScreen implements Screen {
         for (GameObject g : grass) {
             g.draw(batch);
         }
-        for (GameObject r : road) {
-            r.draw(batch);
-        }
-        for (GameObject w : water) {
-            w.draw(batch);
-        }
+        road.draw(batch);
+        water.draw(batch);
         for(GameObject c: cars) {
             c.draw(batch);
             c.moveRight(Gdx.graphics.getDeltaTime());
+        }
+        for(GameObject t: truck) {
+            t.draw(batch);
+            t.moveLeft(Gdx.graphics.getDeltaTime());
         }
         frog.draw(batch);
         batch.end();
@@ -67,65 +69,11 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
 
-        //adding of grass
-        for(int g=0; g<3; g++) {
-            if(g==0){
-                px=0;
-                max = 32;
-            }
-            else if(g==1){
-                px=0;
-                max = 160;
-            }
-            else if(g==2){
-                px=0;
-                max = 288;
-            }
-            for(int i=0; i<23; i++) {
-                grass.add(new Grass(px, max));
-                px += 32;
-            }
-        }
-
-        //adding of roads
-        for(int g=0; g<3; g++) {
-            if(g==0){
-                px=0;
-                max = 64;
-            }
-            else if(g==1){
-                px=0;
-                max = 96;
-            }
-            else if(g==2){
-                px=0;
-                max = 128;
-            }
-            for(int i=0; i<23; i++) {
-                road.add(new Road(px, max));
-                px += 32;
-            }
-        }
-
-        //adding of water
-        for(int g=0; g<3; g++) {
-            if(g==0){
-                px=0;
-                max = 192;
-            }
-            else if(g==1){
-                px=0;
-                max = 224;
-            }
-            else if(g==2){
-                px=0;
-                max = 256;
-            }
-            for(int i=0; i<23; i++) {
-                water.add(new Water(px, max));
-                px += 32;
-            }
-        }
+        grass.add(new Grass(0, 32));
+        grass.add(new Grass(0, 160));
+        grass.add(new Grass(0, 288));
+        road = new Road(0, 64);
+        water = new Water(0,192);
 
         //adding of cars
         for(int g=0; g<2; g++) {
@@ -145,6 +93,13 @@ public class GameScreen implements Screen {
                 else
                     px -=130;
             }
+        }
+
+        //adding of truck
+        px = 704;
+        for(int i = 0; i < 99; i++) {
+            truck.add(new Truck(px,96));
+            px += 250;
         }
 
 
