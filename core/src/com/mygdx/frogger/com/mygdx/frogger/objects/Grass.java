@@ -50,4 +50,9 @@ public class Grass extends GameObject {
     public void moveLeft(float delta) {
 
     }
+
+    @Override
+    public int hitAction(int side) {
+        return 0;
+    }
 }

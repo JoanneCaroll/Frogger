@@ -56,4 +56,9 @@ public class Water extends GameObject {
     public Rectangle getHitBox() {
         return null;
     }
+
+    @Override
+    public int hitAction(int side) {
+        return 0;
+    }
 }
