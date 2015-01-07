@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Frogger game;
     private BitmapFont font;
-    private int max, px, score, flag;
+    private int max, px, score, tries=3, flag;
 
     public GameScreen(Frogger game){
 
@@ -75,6 +75,7 @@ public class GameScreen implements Screen {
         }
         frog.draw(batch);
         font.draw(batch, "Score: " + score, 0, 20);
+        font.draw(batch, "Lives Left " + tries, 200, 20);
         batch.end();
 
         //updates
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
                 frog.action(1);
                 if(c.hitAction(1) == 2) {
                    frog.goToStartPosition();
+                    tries--;
                 }
 
             }
@@ -92,6 +94,7 @@ public class GameScreen implements Screen {
                 frog.action(1);
                 if(t.hitAction(1) == 2) {
                     frog.goToStartPosition();
+                    tries--;
                 }
 
             }
@@ -199,9 +202,10 @@ public class GameScreen implements Screen {
             }
             @Override
             public void onDown() {
-                if(frog.getBottom() > 32)
+                if(frog.getBottom() > 32) {
                     flag = 1;
                     frog.moveDown();
+                }
             }
         }));
     }
