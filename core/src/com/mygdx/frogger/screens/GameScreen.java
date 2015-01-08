@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
         frog = new Frog();
-        frog.setPosition(0, 32);
+        frog.setPosition(0, 64);
     }
 
     @Override
@@ -183,48 +183,48 @@ public class GameScreen implements Screen {
         font = new BitmapFont();
         font.setScale(1.5f);
         font.setColor(Color.RED);
-        grass.add(new Grass(0, 32));
-        grass.add(new Grass(0, 160));
-        grass.add(new Grass(0, 288));
-        road = new Road(0, 64);
-        water = new Water(0,192);
+        grass.add(new Grass(0, 64));
+        grass.add(new Grass(0, 192));
+        grass.add(new Grass(0, 320));
+        road = new Road(0, 96);
+        water = new Water(0,224);
 
         //adding of cars
         for(int g=0; g<2; g++) {
             if(g==0){
                 px=0;
-                max = 64;
+                max = 96;
             }
             else {
                 px=-45;
-                max = 128;
+                max = 160;
             }
             for(int i=0; i<99; i++) {
                 cars.add(new Car(px, max));
                 if(g==0) {
-                    px -=170;
+                    px -=250;
                 }
                 else
-                    px -=200;
+                    px -=210;
             }
         }
 
         //adding of truck
         px = 704;
         for(int i = 0; i < 99; i++) {
-            truck.add(new Truck(px,96));
-            px += 250;
+            truck.add(new Truck(px,128));
+            px += 300;
         }
 
         //adding of lily
         for(int g=0; g<2; g++) {
             if(g==0){
                 px=720;
-                max = 192;
+                max = 224;
             }
             else {
                 px=700;
-                max = 256;
+                max = 288;
             }
             for(int i=0; i<99; i++) {
                 lily.add(new Lily(px, max));
@@ -239,7 +239,7 @@ public class GameScreen implements Screen {
         //adding of log
         px = -85;
         for(int i = 0; i < 99; i++) {
-            log.add(new Log(px, 224 ));
+            log.add(new Log(px, 256 ));
             px -= 200;
         }
 
