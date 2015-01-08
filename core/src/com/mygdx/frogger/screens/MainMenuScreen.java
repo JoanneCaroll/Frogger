@@ -71,8 +71,6 @@ public class MainMenuScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-
-
         MyActor myActor = new MyActor();
         myActor.setTouchable(Touchable.enabled);
         stage.addListener(new ClickListener() {
@@ -84,51 +82,6 @@ public class MainMenuScreen implements Screen {
         stage.addActor(myActor);
     }
 
-
-//    @Override
-//    public void dispose() {
-//        batch.dispose();
-//        buttonSkin.dispose();
-//        buttonsAtlas.dispose();
-//        stage.dispose();
-//    }
-//
-//    @Override
-//    public void show() {
-//
-//    }
-//
-//    @Override
-//    public void hide() {
-//
-//    }
-//
-//    @Override
-//    public void render(float delta) {
-//        batch.begin();
-//        Gdx.gl.glClearColor(1, 1, 1, 1);
-//
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-////        stage.act();
-//
-//        batch.setProjectionMatrix(camera.combined);
-//
-//        stage.draw();
-//        batch.end();
-//    }
-//
-//    @Override
-//    public void resize(int width, int height) {
-//    }
-//
-//    @Override
-//    public void pause() {
-//    }
-//
-//    @Override
-//    public void resume() {
-//    }
-//}
 
     @Override
     public void render(float delta) {
