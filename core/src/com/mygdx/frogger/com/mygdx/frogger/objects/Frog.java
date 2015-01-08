@@ -31,7 +31,7 @@ public class Frog extends GameObject {
 
     public void action(int type, float x, float y) {
         if(type == 1) {
-            setPosition(0,32);
+            setPosition(0,64);
         }
     }
 
@@ -51,6 +51,8 @@ public class Frog extends GameObject {
 
     @Override
     public void moveLeft(float delta) {
+        bottom.x -= (40*delta);
+        sprite.setPosition(bottom.x, bottom.y);
     }
 
     @Override

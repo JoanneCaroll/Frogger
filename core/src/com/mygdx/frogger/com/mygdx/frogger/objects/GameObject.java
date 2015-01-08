@@ -15,4 +15,9 @@ public abstract class GameObject {
     public abstract void draw(SpriteBatch batch);
     public abstract Rectangle getHitBox();
     public abstract int hitAction(int side);
+    public abstract float getBottom();
+    public abstract float getLeft();
+    public abstract float getRight();
+    public abstract float getTop();
+
 }

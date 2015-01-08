@@ -16,7 +16,7 @@ public class Lily extends GameObject{
     Texture texture;
 
     public Lily(int x, int y) {
-        hitBox = new Rectangle(x, y, 32, 32);
+        hitBox = new Rectangle(x, y, 128, 32);
         texture = new Texture(Gdx.files.internal("sprite/lily.png"));
         sprite = new Sprite(texture);
         setPosition(x, y);
@@ -28,7 +28,6 @@ public class Lily extends GameObject{
 
     @Override
     public void action(int type, float x, float y) {
-
     }
 
     @Override
@@ -55,11 +54,32 @@ public class Lily extends GameObject{
 
     @Override
     public Rectangle getHitBox() {
-        return null;
+        return hitBox;
     }
 
     @Override
     public int hitAction(int side) {
+        if(side==1) return 2;
         return 0;
+    }
+
+    @Override
+    public float getBottom() {
+        return sprite.getY();
+    }
+
+    @Override
+    public float getLeft() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getRight() {
+        return sprite.getX()+sprite.getWidth();
+    }
+
+    @Override
+    public float getTop() {
+        return sprite.getY()+sprite.getHeight();
     }
 }

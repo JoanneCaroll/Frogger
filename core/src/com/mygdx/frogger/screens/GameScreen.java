@@ -128,15 +128,19 @@ public class GameScreen implements Screen {
                     if(tries<1) {
                         game.setScreen(new GameOverScreen(game));
                     }
-
                 }
-
             }
         }
-        if(frog.hits(water.getHitBox()) != -1) {
-            frog.action(1);
-            if(water.hitAction(1) == 2) {
-                frog.setPosition(0,32);
+        for(GameObject l: lily) {
+            if(frog.hits(l.getHitBox()) != -1) {
+                if(l.hitAction(1) == 2) {
+                    Gdx.app.log("yoy", (frog.getRight()+"")+ ","+(l.getRight()+""));
+                    if(l.getRight() > (frog.getRight()-10) && frog.getLeft() > l.getLeft())
+                        frog.moveLeft(Gdx.graphics.getDeltaTime());
+                    else
+                        tries--;
+                        frog.goToStartPosition();
+                }
             }
         }
         //controls
@@ -155,7 +159,7 @@ public class GameScreen implements Screen {
                         frog.moveRight();
                 }
                 else if(touch.overlaps(jump)){
-                    if(frog.getTop() < 320) {
+                    if(frog.getTop() < 352) {
                         frog.moveUp();
                         if(flag == 0) {
                             score++;
@@ -164,7 +168,7 @@ public class GameScreen implements Screen {
                     }
                 }
                 else if(touch.overlaps(back)){
-                    if(frog.getBottom() > 32) {
+                    if(frog.getBottom() > 64) {
                         flag = 1;
                         frog.moveDown();
                     }

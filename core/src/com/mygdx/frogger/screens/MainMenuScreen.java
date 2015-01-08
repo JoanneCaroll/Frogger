@@ -4,17 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.frogger.Frogger;
 
 /**
@@ -23,73 +16,41 @@ import com.mygdx.frogger.Frogger;
 public class MainMenuScreen implements Screen {
 
     private Frogger game;
-//    private Stage stage;
     private OrthographicCamera camera;
-
+    private Texture background, playBtn;
     private SpriteBatch batch;
-    private Stage stage; //** stage holds the Button **//
-    private TextureAtlas buttonsAtlas; //** image of buttons **//
-    private Skin buttonSkin; //** images are used as skins of the button **//
-    private TextButton button; //** the button - the only actor in program **//
-
-    public class MyActor extends Actor {
-        Texture texture = new Texture(Gdx.files.internal("buttons/playGameButton.png"));
-        float actorX = 0, actorY = 0;
-        public boolean started = false;
-
-        public MyActor(){
-            setBounds(actorX, actorY, texture.getWidth(),texture.getHeight());
-            addListener(new InputListener(){
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    ((MyActor)event.getTarget()).started = true;
-                    return true;
-                }
-            });
-        }
-
-        @Override
-        public void draw(Batch batch, float alpha){
-            batch.draw(texture, actorX,actorY );
-        }
-
-        @Override
-        public void act(float delta){
-            if(started){
-                actorX+=15;
-                if(actorX > 600) {
-                    goToGameScreen();
-                }
-            }
-        }
-    }
-
+    private Sprite play;
+    private Rectangle btn;
     public MainMenuScreen(Frogger game){
         this.game = game;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-
-        MyActor myActor = new MyActor();
-        myActor.setTouchable(Touchable.enabled);
-        stage.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                goToGameScreen();
-            }
-        });
-        stage.addActor(myActor);
+        background = new Texture(Gdx.files.internal("backgrounds/menubg.png"));
+        playBtn = new Texture(Gdx.files.internal("buttons/playBtn.png"));
+        play = new Sprite(playBtn);
+        play.setPosition(430, 100);
+        btn = new Rectangle(430,100, 143, 45);
     }
 
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
+        batch.draw(background, 0, 0);
+        play.draw(batch);
+
+        for(int i =0; i<1; i++) {
+            if(Gdx.input.isTouched(i)){
+                Vector3 touchPos = new Vector3(Gdx.input.getX(i), Gdx.input.getY(i), 0);
+                camera.unproject(touchPos);
+                Rectangle touch = new Rectangle(touchPos.x, touchPos.y, 143, 45);
+                if(touch.overlaps(btn)){
+                    goToGameScreen();
+                }
+            }
+        }
         batch.end();
     }
 
@@ -120,7 +81,5 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        stage.dispose();
-
     }
 }

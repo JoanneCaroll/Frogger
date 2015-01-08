@@ -62,4 +62,24 @@ public class Road extends GameObject {
     public int hitAction(int side) {
         return 0;
     }
+
+    @Override
+    public float getBottom() {
+        return 0;
+    }
+
+    @Override
+    public float getLeft() {
+        return 0;
+    }
+
+    @Override
+    public float getRight() {
+        return 0;
+    }
+
+    @Override
+    public float getTop() {
+        return 0;
+    }
 }
