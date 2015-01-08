@@ -134,15 +134,34 @@ public class GameScreen implements Screen {
         for(GameObject l: lily) {
             if(frog.hits(l.getHitBox()) != -1) {
                 if(l.hitAction(1) == 2) {
-                    Gdx.app.log("yoy", (frog.getRight()+"")+ ","+(l.getRight()+""));
                     if(l.getRight() > (frog.getRight()-10) && frog.getLeft() > l.getLeft())
                         frog.moveLeft(Gdx.graphics.getDeltaTime());
-                    else
+                    else {
                         tries--;
                         frog.goToStartPosition();
+                        if (tries < 1) {
+                            game.setScreen(new GameOverScreen(game));
+                        }
+                    }
                 }
             }
         }
+        for(GameObject lo: log) {
+            if(frog.hits(lo.getHitBox()) != -1) {
+                if(lo.hitAction(1) == 2) {
+                    if(lo.getRight() > (frog.getRight()-10) && frog.getLeft() > lo.getLeft())
+                        frog.moveRight(Gdx.graphics.getDeltaTime());
+                    else {
+                        tries--;
+                        frog.goToStartPosition();
+                        if (tries < 1) {
+                            game.setScreen(new GameOverScreen(game));
+                        }
+                    }
+                }
+            }
+        }
+
         //controls
         for(int i =0; i<5; i++) {
             if(Gdx.input.isTouched(i)){

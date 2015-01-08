@@ -57,6 +57,8 @@ public class Frog extends GameObject {
 
     @Override
     public void moveRight(float delta) {
+        bottom.x += (70*delta);
+        sprite.setPosition(bottom.x, bottom.y);
     }
 
     //Controls for frog
