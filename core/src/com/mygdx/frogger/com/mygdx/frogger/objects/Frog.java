@@ -63,12 +63,12 @@ public class Frog extends GameObject {
 
     //Controls for frog
     public void moveRight(){
-        bottom.x += 8;
+        bottom.x += 32;
         sprite.setPosition(bottom.x, bottom.y);
     }
 
     public void moveLeft(){
-        bottom.x -= 8;
+        bottom.x -= 32;
         sprite.setPosition(bottom.x, bottom.y);
     }
 
@@ -99,6 +99,7 @@ public class Frog extends GameObject {
     }
 
     public void goToStartPosition(){
+        sprite.setColor(1,1,1,1);
         bottom.x = 0;
         bottom.y = 64;
         sprite.setPosition(bottom.x, bottom.y);

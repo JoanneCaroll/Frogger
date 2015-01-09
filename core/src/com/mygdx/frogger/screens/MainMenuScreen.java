@@ -47,6 +47,9 @@ public class MainMenuScreen implements Screen {
                 camera.unproject(touchPos);
                 Rectangle touch = new Rectangle(touchPos.x, touchPos.y, 143, 45);
                 if(touch.overlaps(btn)){
+                    for(int j=0; j<20; j++) {
+                        play.setPosition(430+i, 100);
+                    }
                     goToGameScreen();
                 }
             }
