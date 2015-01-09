@@ -55,11 +55,32 @@ public class Log extends GameObject{
 
     @Override
     public Rectangle getHitBox() {
-        return null;
+        return hitBox;
     }
 
     @Override
     public int hitAction(int side) {
+        if(side==1) return 2;
         return 0;
+    }
+
+    @Override
+    public float getBottom() {
+        return sprite.getY();
+    }
+
+    @Override
+    public float getLeft() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getRight() {
+        return sprite.getX()+sprite.getWidth();
+    }
+
+    @Override
+    public float getTop() {
+        return sprite.getY()+sprite.getHeight();
     }
 }

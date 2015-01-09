@@ -17,7 +17,7 @@ public class Frog extends GameObject {
 
     //Entry point
     public Frog() {
-        bottom = new Rectangle(0, 0, 32, 32);
+        bottom = new Rectangle(0, 64, 32, 32);
         texture = new Texture(Gdx.files.internal("sprite/frog.png"));
         sprite = new Sprite(texture, 0, 0, 32, 32);
     }
@@ -31,7 +31,7 @@ public class Frog extends GameObject {
 
     public void action(int type, float x, float y) {
         if(type == 1) {
-            setPosition(0,32);
+            setPosition(0,64);
         }
     }
 
@@ -51,20 +51,24 @@ public class Frog extends GameObject {
 
     @Override
     public void moveLeft(float delta) {
+        bottom.x -= (40*delta);
+        sprite.setPosition(bottom.x, bottom.y);
     }
 
     @Override
     public void moveRight(float delta) {
+        bottom.x += (70*delta);
+        sprite.setPosition(bottom.x, bottom.y);
     }
 
     //Controls for frog
     public void moveRight(){
-        bottom.x += 32;
+        bottom.x += 8;
         sprite.setPosition(bottom.x, bottom.y);
     }
 
     public void moveLeft(){
-        bottom.x -= 32;
+        bottom.x -= 8;
         sprite.setPosition(bottom.x, bottom.y);
     }
 
@@ -96,7 +100,7 @@ public class Frog extends GameObject {
 
     public void goToStartPosition(){
         bottom.x = 0;
-        bottom.y = 32;
+        bottom.y = 64;
         sprite.setPosition(bottom.x, bottom.y);
     }
 

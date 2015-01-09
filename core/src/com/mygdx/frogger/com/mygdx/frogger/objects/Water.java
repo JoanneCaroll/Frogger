@@ -62,4 +62,24 @@ public class Water extends GameObject {
         if(side==1) return 2;
         return 0;
     }
+
+    @Override
+    public float getBottom() {
+        return 0;
+    }
+
+    @Override
+    public float getLeft() {
+        return 0;
+    }
+
+    @Override
+    public float getRight() {
+        return 0;
+    }
+
+    @Override
+    public float getTop() {
+        return 0;
+    }
 }
