@@ -1,6 +1,7 @@
 package com.mygdx.frogger.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -49,7 +50,9 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         frog = new Frog();
         frog.setPosition(0, 64);
+        Gdx.input.setCatchBackKey(true);
     }
+
 
     @Override
     public void render(float delta) {
@@ -86,6 +89,9 @@ public class GameScreen implements Screen {
         batch.end();
 
         //updates
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new MainMenuScreen(game));
+        }
         for(GameObject c: cars) {
             if(frog.hits(c.getHitBox()) != -1) {
                 frog.action(1);
