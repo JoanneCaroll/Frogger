@@ -1,6 +1,7 @@
 package com.mygdx.frogger.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,10 +28,10 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
         background = new Texture(Gdx.files.internal("backgrounds/menubg.png"));
-        playBtn = new Texture(Gdx.files.internal("buttons/playBtn.png"));
+        playBtn = new Texture(Gdx.files.internal("buttons/playbutton.png"));
         play = new Sprite(playBtn);
-        play.setPosition(430, 100);
-        btn = new Rectangle(430,100, 143, 45);
+        play.setPosition(500, 50);
+        btn = new Rectangle(500, 100, 165, 159);
     }
 
 
@@ -41,11 +42,14 @@ public class MainMenuScreen implements Screen {
         batch.draw(background, 0, 0);
         play.draw(batch);
 
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            Gdx.app.exit();
+        }
         for(int i =0; i<1; i++) {
             if(Gdx.input.isTouched(i)){
                 Vector3 touchPos = new Vector3(Gdx.input.getX(i), Gdx.input.getY(i), 0);
                 camera.unproject(touchPos);
-                Rectangle touch = new Rectangle(touchPos.x, touchPos.y, 143, 45);
+                Rectangle touch = new Rectangle(touchPos.x, touchPos.y, 165, 159);
                 if(touch.overlaps(btn)){
                     goToGameScreen();
                 }

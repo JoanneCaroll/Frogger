@@ -1,15 +1,13 @@
 package com.mygdx.frogger.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.frogger.Frogger;
 import com.mygdx.frogger.SimpleDirectionGestureDetector;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Car;
@@ -41,36 +39,20 @@ public class GameScreen implements Screen {
     private Frogger game;
     private BitmapFont font;
     private int max, px, score, tries=3, flag;
-    private Rectangle left, right, jump, back;
-    private Sprite spriteLeft, spriteRight, spriteJump, spriteBack;
-    private Texture buttonTexture;
+
+    Rectangle waterRec = new Rectangle(0,224, 720, 96);
 
     public GameScreen(Frogger game){
 
         this.game = game;
         camera = new OrthographicCamera();
-        buttonTexture = new Texture(Gdx.files.internal("buttons/arrows.png"));
-        spriteLeft = new Sprite(buttonTexture, 0, 0, 64, 64);
-        spriteRight = new Sprite(buttonTexture, 64, 0, 64, 64);
-        spriteBack = new Sprite(buttonTexture, 64, 64, 64, 64);
-        spriteJump = new Sprite(buttonTexture, 0, 64, 64, 64);
-
-
-        spriteLeft.setPosition(384, 0);
-        spriteRight.setPosition(468, 0);
-        spriteJump.setPosition(552, 0);
-        spriteBack.setPosition(636, 0);
-
-        left = new Rectangle(384, 0, 64, 64);
-        right = new Rectangle(468, 0, 64, 64);
-        jump = new Rectangle(552, 0, 64, 64);
-        back = new Rectangle(636, 0, 64, 64);
-
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
         frog = new Frog();
         frog.setPosition(0, 64);
+        Gdx.input.setCatchBackKey(true);
     }
+
 
     @Override
     public void render(float delta) {
@@ -100,13 +82,16 @@ public class GameScreen implements Screen {
         frog.draw(batch);
         font.draw(batch, "Score: " + score, 0, 20);
         font.draw(batch, "Lives Left " + tries, 200, 20);
-        spriteBack.draw(batch);
-        spriteRight.draw(batch);
-        spriteLeft.draw(batch);
-        spriteJump.draw(batch);
+        Rectangle top = new Rectangle(0, 320, 720, 32);
+        if(frog.hits(top) != -1){
+            game.setScreen(new YouWinScreen(game));
+        }
         batch.end();
 
         //updates
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new MainMenuScreen(game));
+        }
         for(GameObject c: cars) {
             if(frog.hits(c.getHitBox()) != -1) {
                 frog.action(1);
@@ -131,11 +116,13 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
         for(GameObject l: lily) {
-            if(frog.hits(l.getHitBox()) != -1) {
+            if(frog.hits(l.getHitBox()) != -1 && frog.hits(waterRec) != -1) {
                 if(l.hitAction(1) == 2) {
-                    if(l.getRight() > (frog.getRight()-10) && frog.getLeft() > l.getLeft())
+                    if(l.getRight() > (frog.getRight()) && frog.getLeft() > l.getLeft()-16) {
                         frog.moveLeft(Gdx.graphics.getDeltaTime());
+                    }
                     else {
                         tries--;
                         frog.goToStartPosition();
@@ -145,11 +132,12 @@ public class GameScreen implements Screen {
                     }
                 }
             }
+
         }
         for(GameObject lo: log) {
             if(frog.hits(lo.getHitBox()) != -1) {
                 if(lo.hitAction(1) == 2) {
-                    if(lo.getRight() > (frog.getRight()-10) && frog.getLeft() > lo.getLeft())
+                    if(lo.getRight() > (frog.getRight()) && frog.getLeft() > lo.getLeft()-16)
                         frog.moveRight(Gdx.graphics.getDeltaTime());
                     else {
                         tries--;
@@ -162,38 +150,6 @@ public class GameScreen implements Screen {
             }
         }
 
-        //controls
-        for(int i =0; i<5; i++) {
-            if(Gdx.input.isTouched(i)){
-                Vector3 touchPos = new Vector3(Gdx.input.getX(i), Gdx.input.getY(i), 0);
-                camera.unproject(touchPos);
-                Gdx.app.log("yoy", touchPos.x+"");
-                Rectangle touch = new Rectangle(touchPos.x, touchPos.y, 64, 64);
-                if(touch.overlaps(left)){
-                    if(frog.getLeft() > 0)
-                        frog.moveLeft();
-                }
-                else if(touch.overlaps(right)){
-                    if(frog.getRight() < 704)
-                        frog.moveRight();
-                }
-                else if(touch.overlaps(jump)){
-                    if(frog.getTop() < 352) {
-                        frog.moveUp();
-                        if(flag == 0) {
-                            score++;
-                        }
-                        flag = 0;
-                    }
-                }
-                else if(touch.overlaps(back)){
-                    if(frog.getBottom() > 64) {
-                        flag = 1;
-                        frog.moveDown();
-                    }
-                }
-            }
-        }
 
     }
 
@@ -215,25 +171,25 @@ public class GameScreen implements Screen {
         //adding of cars
         for(int g=0; g<2; g++) {
             if(g==0){
-                px=0;
+                px=500;
                 max = 96;
             }
             else {
-                px=-45;
+                px=600;
                 max = 160;
             }
             for(int i=0; i<99; i++) {
                 cars.add(new Car(px, max));
                 if(g==0) {
-                    px -=250;
+                    px -=170;
                 }
                 else
-                    px -=210;
+                    px -=150;
             }
         }
 
         //adding of truck
-        px = 704;
+        px = 0;
         for(int i = 0; i < 99; i++) {
             truck.add(new Truck(px,128));
             px += 300;
@@ -241,12 +197,11 @@ public class GameScreen implements Screen {
 
         //adding of lily
         for(int g=0; g<2; g++) {
+            px=0;
             if(g==0){
-                px=720;
                 max = 224;
             }
             else {
-                px=700;
                 max = 288;
             }
             for(int i=0; i<99; i++) {
@@ -260,7 +215,7 @@ public class GameScreen implements Screen {
         }
 
         //adding of log
-        px = -85;
+        px = 720;
         for(int i = 0; i < 99; i++) {
             log.add(new Log(px, 256 ));
             px -= 200;
@@ -273,12 +228,12 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
             @Override
             public void onUp() {
-                if(frog.getTop() < 320) {
-                    frog.moveUp();
-                    if(flag == 0) {
-                        score++;
-                    }
-                    flag = 0;
+                if(frog.getTop() < 352) {
+                        frog.moveUp();
+                        if (flag == 0) {
+                            score++;
+                        }
+                        flag = 0;
                 }
             }
             @Override
@@ -293,7 +248,7 @@ public class GameScreen implements Screen {
             }
             @Override
             public void onDown() {
-                if(frog.getBottom() > 32) {
+                if(frog.getBottom() > 64) {
                     flag = 1;
                     frog.moveDown();
                 }
