@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.frogger.Frogger;
 import com.mygdx.frogger.SimpleDirectionGestureDetector;
 import com.mygdx.frogger.com.mygdx.frogger.objects.Car;
@@ -37,31 +38,13 @@ public class GameScreen implements Screen {
     private Frogger game;
     private BitmapFont font;
     private int max, px, score, tries=3, flag;
-  //  private Rectangle top;
-//    private Sprite spriteLeft, spriteRight, spriteJump, spriteBack;
-//    private Texture buttonTexture;
+
+    Rectangle waterRec = new Rectangle(0,224, 720, 96);
 
     public GameScreen(Frogger game){
 
         this.game = game;
         camera = new OrthographicCamera();
-//        buttonTexture = new Texture(Gdx.files.internal("buttons/arrows.png"));
-//        spriteLeft = new Sprite(buttonTexture, 0, 0, 64, 64);
-//        spriteRight = new Sprite(buttonTexture, 64, 0, 64, 64);
-//        spriteBack = new Sprite(buttonTexture, 64, 64, 64, 64);
-//        spriteJump = new Sprite(buttonTexture, 0, 64, 64, 64);
-
-
-//        spriteLeft.setPosition(384, 0);
-//        spriteRight.setPosition(468, 0);
-//        spriteJump.setPosition(552, 0);
-//        spriteBack.setPosition(636, 0);
-
-//        left = new Rectangle(384, 0, 64, 64);
-//        right = new Rectangle(468, 0, 64, 64);
-//        jump = new Rectangle(552, 0, 64, 64);
-//        back = new Rectangle(636, 0, 64, 64);
-
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
         frog = new Frog();
@@ -96,10 +79,10 @@ public class GameScreen implements Screen {
         frog.draw(batch);
         font.draw(batch, "Score: " + score, 0, 20);
         font.draw(batch, "Lives Left " + tries, 200, 20);
-//        spriteBack.draw(batch);
-//        spriteRight.draw(batch);
-//        spriteLeft.draw(batch);
-//        spriteJump.draw(batch);
+        Rectangle top = new Rectangle(0, 320, 720, 32);
+        if(frog.hits(top) != -1){
+            game.setScreen(new YouWinScreen(game));
+        }
         batch.end();
 
         //updates
@@ -127,11 +110,13 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
         for(GameObject l: lily) {
-            if(frog.hits(l.getHitBox()) != -1) {
+            if(frog.hits(l.getHitBox()) != -1 && frog.hits(waterRec) != -1) {
                 if(l.hitAction(1) == 2) {
-                    if(l.getRight() > (frog.getRight()-10) && frog.getLeft() > l.getLeft())
+                    if(l.getRight() > (frog.getRight()) && frog.getLeft() > l.getLeft()-16) {
                         frog.moveLeft(Gdx.graphics.getDeltaTime());
+                    }
                     else {
                         tries--;
                         frog.goToStartPosition();
@@ -141,11 +126,12 @@ public class GameScreen implements Screen {
                     }
                 }
             }
+
         }
         for(GameObject lo: log) {
             if(frog.hits(lo.getHitBox()) != -1) {
                 if(lo.hitAction(1) == 2) {
-                    if(lo.getRight() > (frog.getRight()-10) && frog.getLeft() > lo.getLeft())
+                    if(lo.getRight() > (frog.getRight()) && frog.getLeft() > lo.getLeft()-16)
                         frog.moveRight(Gdx.graphics.getDeltaTime());
                     else {
                         tries--;
@@ -157,6 +143,8 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
+
     }
 
     @Override
@@ -187,7 +175,7 @@ public class GameScreen implements Screen {
             for(int i=0; i<99; i++) {
                 cars.add(new Car(px, max));
                 if(g==0) {
-                    px -=200;
+                    px -=170;
                 }
                 else
                     px -=150;
@@ -203,12 +191,11 @@ public class GameScreen implements Screen {
 
         //adding of lily
         for(int g=0; g<2; g++) {
+            px=0;
             if(g==0){
-                px=720;
                 max = 224;
             }
             else {
-                px=700;
                 max = 288;
             }
             for(int i=0; i<99; i++) {
@@ -222,7 +209,7 @@ public class GameScreen implements Screen {
         }
 
         //adding of log
-        px = -85;
+        px = 720;
         for(int i = 0; i < 99; i++) {
             log.add(new Log(px, 256 ));
             px -= 200;
@@ -236,11 +223,11 @@ public class GameScreen implements Screen {
             @Override
             public void onUp() {
                 if(frog.getTop() < 352) {
-                    frog.moveUp();
-                    if(flag == 0) {
-                        score++;
-                    }
-                    flag = 0;
+                        frog.moveUp();
+                        if (flag == 0) {
+                            score++;
+                        }
+                        flag = 0;
                 }
             }
             @Override

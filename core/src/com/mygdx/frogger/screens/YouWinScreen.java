@@ -8,21 +8,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.frogger.Frogger;
 
 /**
- * Created by Caroll Madrona on 1/7/2015.
+ * Created by Caroll Madrona on 1/9/2015.
  */
-public class GameOverScreen implements Screen {
+public class YouWinScreen  implements Screen {
 
     private Frogger game;
     private SpriteBatch batch;
     private Texture background;
     private OrthographicCamera camera;
 
-    public GameOverScreen(Frogger game){
+    public YouWinScreen(Frogger game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("backgrounds/gameOverBg.png"));
+        background = new Texture(Gdx.files.internal("backgrounds/winBg.png"));
     }
 
     @Override
