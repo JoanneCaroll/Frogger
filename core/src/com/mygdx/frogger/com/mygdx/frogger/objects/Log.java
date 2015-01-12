@@ -16,7 +16,7 @@ public class Log extends GameObject{
     Texture texture;
 
     public Log(int x, int y) {
-        hitBox = new Rectangle(x, y, 32, 32);
+        hitBox = new Rectangle(x, y, 96, 32);
         texture = new Texture(Gdx.files.internal("sprite/log.png"));
         sprite = new Sprite(texture);
         setPosition(x, y);

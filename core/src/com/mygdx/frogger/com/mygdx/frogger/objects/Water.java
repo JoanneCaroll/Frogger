@@ -15,7 +15,7 @@ public class Water extends GameObject {
     Texture texture;
 
     public Water(int x, int y) {
-        hitBox = new Rectangle(x, y, 32, 32);
+        hitBox = new Rectangle(0, 224, 720, 96 );
         texture = new Texture(Gdx.files.internal("sprite/water.png"));
         sprite = new Sprite(texture);
         setPosition(x, y);
