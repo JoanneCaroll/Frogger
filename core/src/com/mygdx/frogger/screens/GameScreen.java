@@ -40,7 +40,6 @@ public class GameScreen implements Screen {
     private BitmapFont font;
     private int max, px, score, tries=3, flag;
 
-    Rectangle waterRec = new Rectangle(0,224, 720, 96);
 
     public GameScreen(Frogger game){
 
@@ -49,7 +48,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 720, 360);
         batch = new SpriteBatch();
         frog = new Frog();
-        frog.setPosition(0, 64);
+        frog.setPosition(360, 64);
         Gdx.input.setCatchBackKey(true);
     }
 
@@ -80,8 +79,8 @@ public class GameScreen implements Screen {
             lg.moveRight(Gdx.graphics.getDeltaTime());
         }
         frog.draw(batch);
-        font.draw(batch, "Score: " + score, 0, 20);
-        font.draw(batch, "Lives Left " + tries, 200, 20);
+        font.draw(batch, "Score: " + score, 10, 40);
+        font.draw(batch, "Lives Left " + tries, 210, 40);
         Rectangle top = new Rectangle(0, 320, 720, 32);
         if(frog.hits(top) != -1){
             game.setScreen(new YouWinScreen(game));
@@ -89,9 +88,10 @@ public class GameScreen implements Screen {
         batch.end();
 
         //updates
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             game.setScreen(new MainMenuScreen(game));
         }
+
         for(GameObject c: cars) {
             if(frog.hits(c.getHitBox()) != -1) {
                 frog.action(1);
@@ -116,14 +116,25 @@ public class GameScreen implements Screen {
                 }
             }
         }
-
         for(GameObject l: lily) {
-            if(frog.hits(l.getHitBox()) != -1 && frog.hits(waterRec) != -1) {
+
+            if(frog.hits(l.getHitBox()) != -1 && frog.hits(water.getHitBox()) != -1) {
+
                 if(l.hitAction(1) == 2) {
-                    if(l.getRight() > (frog.getRight()) && frog.getLeft() > l.getLeft()-16) {
-                        frog.moveLeft(Gdx.graphics.getDeltaTime());
+                    if(l.getRight() > (frog.getRight()) && frog.getLeft() > l.getLeft()) {
+                        if(frog.getLeft() > 0) {
+                            frog.moveLeft(Gdx.graphics.getDeltaTime());
+                        }
+                        else {
+                            tries--;
+                            frog.goToStartPosition();
+                            if (tries < 1) {
+                                game.setScreen(new GameOverScreen(game));
+                            }
+                        }
                     }
                     else {
+
                         tries--;
                         frog.goToStartPosition();
                         if (tries < 1) {
@@ -137,8 +148,17 @@ public class GameScreen implements Screen {
         for(GameObject lo: log) {
             if(frog.hits(lo.getHitBox()) != -1) {
                 if(lo.hitAction(1) == 2) {
-                    if(lo.getRight() > (frog.getRight()) && frog.getLeft() > lo.getLeft()-16)
-                        frog.moveRight(Gdx.graphics.getDeltaTime());
+                    if(lo.getRight() > (frog.getRight()) && frog.getLeft() > lo.getLeft()-16) {
+                        if (frog.getRight() < 720)
+                            frog.moveRight(Gdx.graphics.getDeltaTime());
+                        else {
+                            tries--;
+                            frog.goToStartPosition();
+                            if (tries < 1) {
+                                game.setScreen(new GameOverScreen(game));
+                            }
+                        }
+                    }
                     else {
                         tries--;
                         frog.goToStartPosition();
@@ -149,8 +169,6 @@ public class GameScreen implements Screen {
                 }
             }
         }
-
-
     }
 
     @Override
@@ -243,7 +261,7 @@ public class GameScreen implements Screen {
             }
             @Override
             public void onLeft() {
-                if(frog.getLeft() > 0)
+                if(frog.getLeft() > 10)
                     frog.moveLeft();
             }
             @Override
